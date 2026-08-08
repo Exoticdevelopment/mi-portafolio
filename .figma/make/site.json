@@ -1,0 +1,10 @@
+{
+  "description": "Showcases a developer's projects, GitHub, contact info, and email in an innovative portfolio to attract clients and collaborators.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
