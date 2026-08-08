@@ -870,7 +870,7 @@ export default function App() {
               }
               label="linkedin"
               value="linkedin.com/in/exoticdev"
-              href="https://linkedin.com/in/exoticdev"
+              href="https://www.linkedin.com/in/miguel-angel-gonzalez-zuluaga-675504247/"
               color="#0a66c2"
             />
           </div>
