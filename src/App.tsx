@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import exoticdevLogo from '@/imports/EXOTICDEV_LOGO.png'
+import cvFile from '@/assets/CV_Miguel_Angel_Gonzalez_Zuluaga.pdf?url'
 
 const PROJECTS = [
   {
@@ -404,7 +405,10 @@ export default function App() {
             {['work', 'stack', 'contact', 'cv'].map((item) => (
               <a
                 key={item}
-                href={`#${item}`}
+                href={item === 'cv' ? cvFile : `#${item}`}
+                {...(item === 'cv'
+                  ? { download: 'CV_Miguel_Angel_Gonzalez_Zuluaga.pdf' }
+                  : {})}
                 style={{
                   fontFamily: 'JetBrains Mono, monospace',
                   fontSize: 12,
