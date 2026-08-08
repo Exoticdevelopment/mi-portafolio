@@ -1,7 +1,15 @@
 {
-  "description": "Showcases a developer's projects, GitHub, contact info, and email in an innovative portfolio to attract clients and collaborators.",
+  "title": "ExoticDev | Portafolio Profesional",
+  "description": "Portafolio de desarrollo de software, proyectos interactivos, repositorios en GitHub y contacto profesional.",
+  "language": "es",
   "robots": {
-    "index": false
+    "index": true
+  },
+  "icons": {
+    "icon": "/exoticdev-favicon.png"
+  },
+  "openGraph": {
+    "image": "/og-image.png"
   },
   "accessibility": {
     "addBypassLinks": false,

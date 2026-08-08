@@ -1,8 +1,9 @@
 {
-  "name": "figma-make-app",
+  "name": "mi-portafolio",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
+  "description": "Portafolio personal de desarrollo web",
+  "author": "ExoticDev",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
