@@ -309,7 +309,24 @@ function ContactItem({
 export default function App() {
   const [activeFilter, setActiveFilter] = useState('all')
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [nameGlitching, setNameGlitching] = useState(false)
+  const glitchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
+
+  // En pantallas táctiles no existe un "mouseleave" real, así que si dependemos
+  // solo de :hover el efecto glitch se queda pegado tras el toque. Con esto,
+  // en touch el glitch se activa un instante y se apaga solo.
+  const triggerNameGlitch = () => {
+    setNameGlitching(true)
+    if (glitchTimeoutRef.current) clearTimeout(glitchTimeoutRef.current)
+    glitchTimeoutRef.current = setTimeout(() => setNameGlitching(false), 700)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (glitchTimeoutRef.current) clearTimeout(glitchTimeoutRef.current)
+    }
+  }, [])
 
   useEffect(() => {
     const handleMouse = (e: MouseEvent) => {
@@ -426,11 +443,13 @@ export default function App() {
             </div>
 
             <h1
-              className="glitch-text"
+              className={`glitch-text${nameGlitching ? ' is-glitching' : ''}`}
               data-text="Miguel Angel"
+              onClick={triggerNameGlitch}
+              onTouchStart={triggerNameGlitch}
               style={{
                 fontFamily: 'Pixelify Sans, monospace',
-                fontSize: 'clamp(52px, 7vw, 88px)',
+                fontSize: 'clamp(40px, 9vw, 88px)',
                 fontWeight: 700,
                 color: '#e2e2f0',
                 lineHeight: 1.05,
@@ -571,14 +590,13 @@ export default function App() {
             borderRadius: 2,
             overflow: 'hidden',
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridTemplateColumns: 'repeat(3, 1fr)',
           }}
         >
           {[
             { label: 'projects shipped', value: '3' },
             { label: 'github stars', value: '8.4k' },
             { label: 'years coding', value: '3' },
-            { label: 'cups of coffee', value: '∞' },
           ].map(({ label, value }) => (
             <div key={label} style={{ background: '#0f0f1a', padding: '24px', textAlign: 'center' }}>
               <div
