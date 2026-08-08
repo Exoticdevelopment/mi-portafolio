@@ -38,10 +38,12 @@ const SKILLS = ['Rust', 'Go', 'TypeScript', 'Python', 'C/C++', 'Zig', 'WASM', 'C
 
 function TerminalLine({ text, delay = 0 }: { text: string; delay?: number }) {
   const [visible, setVisible] = useState(false)
+
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), delay)
     return () => clearTimeout(t)
   }, [delay])
+
   return (
     <div
       className="font-mono text-sm leading-relaxed"
@@ -62,6 +64,7 @@ function StatusDot({ status }: { status: string }) {
     archived: '#4a4a6a',
     wip: '#f59e0b',
   }
+
   return (
     <span
       style={{
@@ -77,7 +80,7 @@ function StatusDot({ status }: { status: string }) {
   )
 }
 
-function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index: number }) {
+function ProjectCard({ project }: { project: (typeof PROJECTS)[0]; index?: number }) {
   const [hovered, setHovered] = useState(false)
 
   return (
@@ -97,7 +100,6 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
         transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
       }}
     >
-      {/* Accent line top */}
       <div
         style={{
           position: 'absolute',
@@ -122,6 +124,7 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
         >
           [{project.id}]
         </span>
+
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <StatusDot status={project.status} />
           <span
@@ -143,7 +146,7 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
           fontFamily: 'Pixelify Sans, monospace',
           fontSize: 22,
           fontWeight: 600,
-          color: hovered ? project.color : '#e2e2f0',
+          color: hovered ? '#ffffff' : '#e2e2f0',
           marginBottom: 10,
           transition: 'color 0.2s',
           letterSpacing: '0.02em',
@@ -187,11 +190,12 @@ function ProjectCard({ project, index }: { project: (typeof PROJECTS)[0]; index:
         <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: '#4a4a6a' }}>
           ★ {project.stars.toLocaleString()}
         </span>
+
         <span
           style={{
             fontFamily: 'JetBrains Mono, monospace',
             fontSize: 11,
-            color: hovered ? project.color : '#4a4a6a',
+            color: hovered ? '#ffffff' : '#4a4a6a',
             transition: 'color 0.2s',
             letterSpacing: '0.08em',
           }}
@@ -217,6 +221,7 @@ function ContactItem({
   color: string
 }) {
   const [hovered, setHovered] = useState(false)
+
   return (
     <a
       href={href}
@@ -257,6 +262,7 @@ function ContactItem({
       >
         {icon}
       </div>
+
       <div>
         <div
           style={{
@@ -270,17 +276,19 @@ function ContactItem({
         >
           {label}
         </div>
+
         <div
           style={{
             fontFamily: 'JetBrains Mono, monospace',
             fontSize: 13,
-            color: hovered ? color : '#e2e2f0',
+            color: hovered ? '#ffffff' : '#e2e2f0',
             transition: 'color 0.2s',
           }}
         >
           {value}
         </div>
       </div>
+
       {hovered && (
         <div
           style={{
@@ -299,14 +307,15 @@ function ContactItem({
 }
 
 export default function App() {
-  const [activeFilter, setActiveFilter] = useState<string>('all')
+  const [activeFilter, setActiveFilter] = useState('all')
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  const containerRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const handleMouse = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY })
     }
+
     window.addEventListener('mousemove', handleMouse)
     return () => window.removeEventListener('mousemove', handleMouse)
   }, [])
@@ -325,10 +334,18 @@ export default function App() {
         overflow: 'hidden',
       }}
     >
-      {/* Noise overlay */}
-      <div className="noise-overlay" />
+      <div
+        style={{
+          position: 'fixed',
+          inset: 0,
+          pointerEvents: 'none',
+          zIndex: 0,
+          opacity: 0.25,
+          backgroundImage:
+            'radial-gradient(circle at 20% 20%, #00ffcc08 0, transparent 30%), radial-gradient(circle at 80% 80%, #a855f708 0, transparent 30%)',
+        }}
+      />
 
-      {/* Ambient glow following cursor */}
       <div
         style={{
           position: 'fixed',
@@ -343,7 +360,6 @@ export default function App() {
         }}
       />
 
-      {/* Grid pattern */}
       <div
         style={{
           position: 'fixed',
@@ -357,8 +373,6 @@ export default function App() {
       />
 
       <div style={{ position: 'relative', zIndex: 2, maxWidth: 1100, margin: '0 auto', padding: '0 16px' }}>
-
-        {/* NAV */}
         <nav
           style={{
             display: 'flex',
@@ -369,7 +383,7 @@ export default function App() {
             marginBottom: 80,
           }}
         >
-          <div className="nav-links">
+          <div className="nav-links" style={{ display: 'flex', gap: 24 }}>
             {['work', 'stack', 'contact', 'cv'].map((item) => (
               <a
                 key={item}
@@ -383,8 +397,8 @@ export default function App() {
                   textTransform: 'uppercase',
                   transition: 'color 0.2s',
                 }}
-                onMouseEnter={(e) => ((e.target as HTMLElement).style.color = '#00ffcc')}
-                onMouseLeave={(e) => ((e.target as HTMLElement).style.color = '#4a4a6a')}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = '#ffffff')}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = '#4a4a6a')}
               >
                 {item}
               </a>
@@ -392,7 +406,6 @@ export default function App() {
           </div>
         </nav>
 
-        {/* HERO */}
         <section className="hero-grid" style={{ marginBottom: 100 }}>
           <div>
             <div
@@ -465,14 +478,17 @@ export default function App() {
                   transition: 'box-shadow 0.2s',
                 }}
                 onMouseEnter={(e) =>
-                  ((e.target as HTMLElement).style.boxShadow = '0 0 24px #00ffcc55')
+                  ((e.currentTarget as HTMLElement).style.boxShadow = '0 0 24px #00ffcc55')
                 }
-                onMouseLeave={(e) => ((e.target as HTMLElement).style.boxShadow = 'none')}
+                onMouseLeave={(e) =>
+                  ((e.currentTarget as HTMLElement).style.boxShadow = 'none')
+                }
               >
                 contact_me()
               </a>
+
               <a
-                href="https://github.com"
+                href="https://github.com/Exoticdevelopment"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -483,21 +499,24 @@ export default function App() {
                   borderRadius: 1,
                   border: '1px solid #00ffcc44',
                   letterSpacing: '0.08em',
-                  transition: 'border-color 0.2s',
+                  transition: 'border-color 0.2s, color 0.2s',
                 }}
-                onMouseEnter={(e) =>
-                  ((e.target as HTMLElement).style.borderColor = '#00ffcc')
-                }
-                onMouseLeave={(e) =>
-                  ((e.target as HTMLElement).style.borderColor = '#00ffcc44')
-                }
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLElement
+                  el.style.borderColor = '#ffffff'
+                  el.style.color = '#ffffff'
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLElement
+                  el.style.borderColor = '#00ffcc44'
+                  el.style.color = '#00ffcc'
+                }}
               >
                 github →
               </a>
             </div>
           </div>
 
-          {/* Terminal card */}
           <div
             className="hero-terminal"
             style={{
@@ -524,33 +543,26 @@ export default function App() {
                 exoticdev ~ terminal
               </span>
             </div>
+
             <div style={{ padding: '20px 20px', lineHeight: 2 }}>
               <TerminalLine text="$ whoami" delay={200} />
               <TerminalLine text={`> exoticdev // systems_engineer`} delay={600} />
               <TerminalLine text=" " delay={800} />
               <TerminalLine text="$ cat stack.txt" delay={1000} />
+
               {SKILLS.map((s, i) => (
-                <TerminalLine
-                  key={s}
-                  text={`> ${s}`}
-                  delay={1200 + i * 80}
-                />
+                <TerminalLine key={s} text={`> ${s}`} delay={1200 + i * 80} />
               ))}
+
               <TerminalLine text=" " delay={2200} />
-              <div
-                style={{
-                  fontFamily: 'JetBrains Mono, monospace',
-                  fontSize: 13,
-                  color: '#00ffcc',
-                }}
-              >
+
+              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 13, color: '#00ffcc' }}>
                 <TerminalLine text="$ _" delay={2400} />
               </div>
             </div>
           </div>
         </section>
 
-        {/* STATS BAR */}
         <div
           className="stats-grid"
           style={{
@@ -558,6 +570,8 @@ export default function App() {
             marginBottom: 100,
             borderRadius: 2,
             overflow: 'hidden',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
           }}
         >
           {[
@@ -566,14 +580,7 @@ export default function App() {
             { label: 'years coding', value: '3' },
             { label: 'cups of coffee', value: '∞' },
           ].map(({ label, value }) => (
-            <div
-              key={label}
-              style={{
-                background: '#0f0f1a',
-                padding: '24px',
-                textAlign: 'center',
-              }}
-            >
+            <div key={label} style={{ background: '#0f0f1a', padding: '24px', textAlign: 'center' }}>
               <div
                 style={{
                   fontFamily: 'Pixelify Sans, monospace',
@@ -601,7 +608,6 @@ export default function App() {
           ))}
         </div>
 
-        {/* PROJECTS */}
         <section id="work" style={{ marginBottom: 100 }}>
           <div
             style={{
@@ -626,6 +632,7 @@ export default function App() {
               >
                 // selected work
               </div>
+
               <h2
                 style={{
                   fontFamily: 'Pixelify Sans, monospace',
@@ -638,6 +645,7 @@ export default function App() {
                 Projects
               </h2>
             </div>
+
             <div style={{ display: 'flex', gap: 8 }}>
               {filters.map((f) => (
                 <button
@@ -648,9 +656,9 @@ export default function App() {
                     fontSize: 11,
                     padding: '6px 14px',
                     borderRadius: 1,
-                    border: `1px solid ${activeFilter === f ? '#00ffcc' : '#1e1e38'}`,
-                    background: activeFilter === f ? '#00ffcc18' : 'transparent',
-                    color: activeFilter === f ? '#00ffcc' : '#4a4a6a',
+                    border: `1px solid ${activeFilter === f ? '#ffffff' : '#1e1e38'}`,
+                    background: activeFilter === f ? '#ffffff18' : 'transparent',
+                    color: activeFilter === f ? '#ffffff' : '#4a4a6a',
                     cursor: 'pointer',
                     letterSpacing: '0.1em',
                     textTransform: 'uppercase',
@@ -676,7 +684,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* SKILLS */}
         <section id="stack" style={{ marginBottom: 100 }}>
           <div
             style={{
@@ -690,6 +697,7 @@ export default function App() {
           >
             // tools & technologies
           </div>
+
           <h2
             style={{
               fontFamily: 'Pixelify Sans, monospace',
@@ -702,6 +710,7 @@ export default function App() {
           >
             Stack
           </h2>
+
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
             {[
               { name: 'Rust', level: 95 },
@@ -734,7 +743,7 @@ export default function App() {
                   transition: 'border-color 0.2s',
                 }}
                 onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLElement).style.borderColor = '#00ffcc44')
+                  ((e.currentTarget as HTMLElement).style.borderColor = '#ffffff55')
                 }
                 onMouseLeave={(e) =>
                   ((e.currentTarget as HTMLElement).style.borderColor = '#1e1e38')
@@ -749,6 +758,7 @@ export default function App() {
                 >
                   {name}
                 </span>
+
                 <div style={{ display: 'flex', gap: 2 }}>
                   {Array.from({ length: 5 }).map((_, i) => (
                     <div
@@ -768,7 +778,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* CONTACT */}
         <section id="contact" style={{ marginBottom: 80 }}>
           <div
             style={{
@@ -782,6 +791,7 @@ export default function App() {
           >
             // reach out
           </div>
+
           <h2
             style={{
               fontFamily: 'Pixelify Sans, monospace',
@@ -814,6 +824,7 @@ export default function App() {
               href="https://github.com/Exoticdevelopment"
               color="#e2e2f0"
             />
+
             <ContactItem
               icon={
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -826,10 +837,11 @@ export default function App() {
               href="mailto:exoticdev777@gmail.com"
               color="#00ffcc"
             />
+
             <ContactItem
               icon={
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 15h-.08z" />
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 12.84 12.84 0 0 1 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 15h-.08z" />
                 </svg>
               }
               label="phone"
@@ -837,6 +849,7 @@ export default function App() {
               href="tel:+573159020723"
               color="#a855f7"
             />
+
             <ContactItem
               icon={
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -848,9 +861,20 @@ export default function App() {
               href="#"
               color="#5865f2"
             />
+
+            <ContactItem
+              icon={
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+              }
+              label="linkedin"
+              value="linkedin.com/in/exoticdev"
+              href="https://linkedin.com/in/exoticdev"
+              color="#0a66c2"
+            />
           </div>
 
-          {/* CTA */}
           <div
             className="cta-block"
             style={{
@@ -879,6 +903,7 @@ export default function App() {
                 pointerEvents: 'none',
               }}
             />
+
             <div>
               <h3
                 style={{
@@ -891,6 +916,7 @@ export default function App() {
               >
                 Got a project in mind?
               </h3>
+
               <p
                 style={{
                   fontFamily: 'Inter, sans-serif',
@@ -898,9 +924,10 @@ export default function App() {
                   color: '#8888aa',
                 }}
               >
-                Let"s build something that actually performs.
+                Let's build something that actually performs.
               </p>
             </div>
+
             <a
               href="mailto:exoticdev777@gmail.com"
               style={{
@@ -917,16 +944,17 @@ export default function App() {
                 transition: 'box-shadow 0.2s',
               }}
               onMouseEnter={(e) =>
-                ((e.target as HTMLElement).style.boxShadow = '0 0 30px #00ffcc55')
+                ((e.currentTarget as HTMLElement).style.boxShadow = '0 0 30px #00ffcc55')
               }
-              onMouseLeave={(e) => ((e.target as HTMLElement).style.boxShadow = 'none')}
+              onMouseLeave={(e) =>
+                ((e.currentTarget as HTMLElement).style.boxShadow = 'none')
+              }
             >
               send_message() →
             </a>
           </div>
         </section>
 
-        {/* FOOTER */}
         <footer
           style={{
             borderTop: '1px solid #1e1e38',
@@ -948,6 +976,7 @@ export default function App() {
           >
             © 2026 exoticdev — built with ♥ and caffeine
           </span>
+
           <span
             style={{
               fontFamily: 'JetBrains Mono, monospace',

@@ -22,3 +22,18 @@ declare module 'path' {
 
 declare const process: any
 declare const __dirname: string
+
+declare module '*.png' {
+  const src: string
+  export default src
+}
+
+declare namespace React {
+  type ReactNode = any
+}
+
+declare namespace JSX {
+  interface IntrinsicElements {
+    [elemName: string]: any
+  }
+}
