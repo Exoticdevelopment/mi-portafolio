@@ -422,7 +422,7 @@ export default function App() {
               }}
             >
               <span style={{ display: 'inline-block', width: 24, height: 1, background: '#00ffcc' }} />
-              Software Engineer
+              EXOTICDEV
             </div>
 
             <h1
