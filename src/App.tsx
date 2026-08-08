@@ -422,7 +422,7 @@ export default function App() {
               }}
             >
               <span style={{ display: 'inline-block', width: 24, height: 1, background: '#00ffcc' }} />
-              available for hire
+              Software Engineer
             </div>
 
             <h1
