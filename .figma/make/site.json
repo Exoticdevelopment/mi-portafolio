@@ -6,10 +6,10 @@
     "index": true
   },
   "icons": {
-    "icon": "/exoticdev-favicon.png"
+    "icon": "./exoticdev-favicon.png"
   },
   "openGraph": {
-    "image": "/og-image.png"
+    "image": "./exoticdev-favicon.png"
   },
   "accessibility": {
     "addBypassLinks": false,

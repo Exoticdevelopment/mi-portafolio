@@ -869,7 +869,7 @@ export default function App() {
                 </svg>
               }
               label="linkedin"
-              value="linkedin.com/in/exoticdev"
+              value="linkedin.com/in/miguel-gonzalez"
               href="https://www.linkedin.com/in/miguel-angel-gonzalez-zuluaga-675504247/"
               color="#0a66c2"
             />
