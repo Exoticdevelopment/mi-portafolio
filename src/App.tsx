@@ -5,37 +5,52 @@ import cvFile from '@/assets/CV_Miguel_Angel_Gonzalez_Zuluaga.pdf?url'
 const PROJECTS = [
   {
     id: '01',
-    name: 'NeuralMesh',
-    desc: 'Distributed inference engine for LLMs on heterogeneous GPU clusters. Zero-copy tensor routing with custom CUDA kernels.',
-    tags: ['Rust', 'CUDA', 'Python'],
-    stars: 2841,
+    name: 'PayBox Tribunal',
+    desc: 'Pay-on-validation for x402: AI agents only pay when the API keeps its promise. Settled on Solana mainnet and Base; 19 broken promises blocked, $0 charged for failures.',
+    tags: ['TypeScript', 'x402', 'Solana', 'Claude API', 'MCP'],
     status: 'active',
     color: '#00ffcc',
-    url: '#',
+    url: 'https://github.com/Exoticdevelopment/paybox-tribunal',
   },
   {
     id: '02',
-    name: 'Phantasm',
-    desc: 'WebGPU-accelerated generative art engine. Procedural noise + shader graphs, exports to SVG, WebM, or live canvas.',
-    tags: ['TypeScript', 'WebGPU', 'WGSL'],
-    stars: 1204,
+    name: '¿Dónde la Veo?',
+    desc: 'Movie-ticket price comparator for Colombia: scrapers for 4 cinema chains, a FastAPI backend that matches titles across chains, and a React Native app.',
+    tags: ['Python', 'FastAPI', 'React Native', 'SQLite'],
     status: 'active',
     color: '#a855f7',
-    url: '#',
+    url: 'https://github.com/Exoticdevelopment/donde-la-veo',
   },
   {
     id: '03',
-    name: 'Helix DB',
-    desc: 'Append-only columnar store with DNA-inspired encoding. Sub-millisecond range queries on 10B row datasets.',
-    tags: ['Go', 'C', 'Assembly'],
-    stars: 987,
+    name: 'BarberSystem',
+    desc: '12 Flask microservices plus a live health dashboard for a barbershop, all started with one Docker Compose command.',
+    tags: ['Python', 'Flask', 'Docker'],
     status: 'archived',
     color: '#00ff88',
-    url: '#',
+    url: 'https://github.com/Exoticdevelopment/barberia-microservicios',
+  },
+  {
+    id: '04',
+    name: 'CloudOps',
+    desc: 'Multiplayer browser game where you play the on-call SRE: resolve 19 real production incidents (Kubernetes, CI/CD, AWS) before the timer runs out.',
+    tags: ['JavaScript', 'HTML', 'CSS'],
+    status: 'archived',
+    color: '#00e5ff',
+    url: 'https://exoticdevelopment.github.io/cloudops-mision-infraestructura/',
+  },
+  {
+    id: '05',
+    name: 'Gym.DB',
+    desc: 'Gym booking system on Oracle: relational model, sequences and a trigger that blocks bookings when a class is full.',
+    tags: ['Python', 'Flask', 'Oracle', 'PL/SQL'],
+    status: 'archived',
+    color: '#f59e0b',
+    url: 'https://github.com/Exoticdevelopment/gym-db',
   },
 ]
 
-const SKILLS = ['Rust', 'Go', 'TypeScript', 'Python', 'C/C++', 'Zig', 'WASM', 'CUDA', 'WebGPU', 'k8s', 'Linux', 'gRPC']
+const SKILLS = ['Python', 'TypeScript', 'JavaScript', 'SQL', 'React', 'React Native', 'FastAPI', 'Flask', 'Node.js', 'Docker', 'x402', 'MCP']
 
 function TerminalLine({ text, delay = 0 }: { text: string; delay?: number }) {
   const [visible, setVisible] = useState(false)
@@ -188,9 +203,7 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[0]; index?: numbe
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: '#4a4a6a' }}>
-          ★ {project.stars.toLocaleString()}
-        </span>
+        <span />
 
         <span
           style={{
@@ -338,7 +351,7 @@ export default function App() {
     return () => window.removeEventListener('mousemove', handleMouse)
   }, [])
 
-  const filters = ['all', 'active', 'wip', 'archived']
+  const filters = ['all', 'active', 'archived']
   const filtered =
     activeFilter === 'all' ? PROJECTS : PROJECTS.filter((p) => p.status === activeFilter)
 
@@ -476,7 +489,7 @@ export default function App() {
                 marginBottom: 36,
               }}
             >
-              Systems engineer obsessed with performance, distributed systems, and the intersection of compilers and creative tools. I build things that run fast and last.
+              Full Stack Developer from Cali, Colombia. I build web apps, APIs and automations in Python and TypeScript, and lately payment rails that AI agents can trust.
             </p>
 
             <div
@@ -569,7 +582,7 @@ export default function App() {
 
             <div style={{ padding: '20px 20px', lineHeight: 2 }}>
               <TerminalLine text="$ whoami" delay={200} />
-              <TerminalLine text={`> exoticdev // systems_engineer`} delay={600} />
+              <TerminalLine text={`> exoticdev // full_stack_dev`} delay={600} />
               <TerminalLine text=" " delay={800} />
               <TerminalLine text="$ cat stack.txt" delay={1000} />
 
@@ -598,8 +611,8 @@ export default function App() {
           }}
         >
           {[
-            { label: 'projects shipped', value: '3' },
-            { label: 'github stars', value: '8.4k' },
+            { label: 'projects shipped', value: '5' },
+            { label: 'chains integrated', value: '2' },
             { label: 'years coding', value: '3' },
           ].map(({ label, value }) => (
             <div key={label} style={{ background: '#0f0f1a', padding: '24px', textAlign: 'center' }}>
@@ -735,22 +748,20 @@ export default function App() {
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
             {[
-              { name: 'Rust', level: 95 },
-              { name: 'Go', level: 90 },
-              { name: 'TypeScript', level: 88 },
-              { name: 'Python', level: 85 },
-              { name: 'C/C++', level: 82 },
-              { name: 'Zig', level: 70 },
-              { name: 'Elixir', level: 72 },
-              { name: 'CUDA', level: 68 },
-              { name: 'WebGPU', level: 75 },
-              { name: 'WASM', level: 80 },
-              { name: 'Linux', level: 92 },
-              { name: 'Docker', level: 88 },
-              { name: 'Kubernetes', level: 80 },
-              { name: 'PostgreSQL', level: 85 },
-              { name: 'Redis', level: 82 },
-              { name: 'gRPC', level: 84 },
+              { name: 'Python', level: 88 },
+              { name: 'TypeScript', level: 80 },
+              { name: 'JavaScript', level: 82 },
+              { name: 'SQL', level: 80 },
+              { name: 'React', level: 72 },
+              { name: 'React Native', level: 70 },
+              { name: 'FastAPI', level: 72 },
+              { name: 'Flask', level: 80 },
+              { name: 'Node.js', level: 72 },
+              { name: 'Docker', level: 70 },
+              { name: 'Git', level: 85 },
+              { name: 'Oracle', level: 65 },
+              { name: 'x402', level: 70 },
+              { name: 'MCP', level: 70 },
             ].map(({ name, level }) => (
               <div
                 key={name}
@@ -842,7 +853,7 @@ export default function App() {
                 </svg>
               }
               label="github"
-              value="github.com/Exotic"
+              value="github.com/Exoticdevelopment"
               href="https://github.com/Exoticdevelopment"
               color="#e2e2f0"
             />
